@@ -7,6 +7,13 @@ async function axiosTest () {
     return response.data;
 }
 
+let pokemonType = await axiosTest2();
+console.log("Datas via Axios : ", pokemonType);
+async function axiosTest2 () {
+    const response = await axios.get("https://pokebuildapi.fr/api/v1/types");
+    return response.data;
+}
+
 let main = document.createElement('main');
 document.body.appendChild(main);
 
@@ -19,7 +26,7 @@ let fieldset = document.createElement("fieldset");
  fieldset.setAttribute("id","fieldset");
  main.appendChild(fieldset);
  
- let legend = document.createElement("legend");
+let legend = document.createElement("legend");
   legend.classList.add("lagend");
   fieldset.appendChild(legend);
   legend.innerText = "Recherche Pokemon"
@@ -29,9 +36,10 @@ let radio = document.createElement("input");
    radio.type = "radio";
    radio.id = "radioButton";
    radio.name = "pokemonList";
-   radio.value = "Par Nom"; // valeur du button radio
+   radio.value = "par-nom"; // valeur du button radio
+//    radio.setAttribute("checked", true);
 let label = document.createElement("label");
-label.for = "radiobutton";// il faut avoir les memes name des deux input 
+label.setAttribute("for", "radioButton");// il faut avoir les memes name des deux input 
     label.innerText = "par Nom";
 
 
@@ -39,11 +47,11 @@ let radio2 = document.createElement("input");
     radio2.type = "radio";
     radio2.id = "radioButton2";
     radio2.name = "pokemonList";//.....il faut donner le meme radio.name pour alterner le checked des bouttons
-    radio.value = "Par Element" // valeur du button radio
+    radio2.value = "par-element" // valeur du button radio
 let label2 = document.createElement("label");
 label2.setAttribute("id","radiobutton2");
-  label2.for = "radioButton2";
-  label2.innerText = "par element";
+  label2.setAttribute("for", "radioButton2");
+  label2.innerText = "par Type";
 
 let form = document.createElement("div");
  form.setAttribute("id","form");
@@ -61,21 +69,18 @@ let pokemonList = document.createElement('select');
     pokemonList.setAttribute('id', 'pokemonList');            
     fieldset.appendChild(pokemonList);
 
-let option = document.createElement("option");
-  option.innerText = "--Choix Pokemon--";//....choisir de rien afficher au depart et cest au client de choisir son pokemon.....
-  pokemonList.appendChild(option);
 
-  let contenair = document.createElement("div");
+let contenair = document.createElement("div");
 contenair.classList.add("contenair");
 main.appendChild(contenair);
 
 let lesStats = document.createElement("table");
 contenair.appendChild(lesStats);
 let uneLigne = document.createElement("tr");
- lesStats.appendChild(uneLigne);
- let uneStat = document.createElement("td");
- uneStat.classList.add("une-statistique");
- uneLigne.appendChild(uneStat);
+lesStats.appendChild(uneLigne);
+let uneStat = document.createElement("td");
+uneStat.classList.add("une-statistique");
+uneLigne.appendChild(uneStat);
 
 let image = document.createElement('img');
 image.setAttribute('id','pokemon-img');
@@ -84,12 +89,70 @@ contenair.appendChild(image);
 
 //         radio = document.querySelector('input[type ="radio"]:chcked');
 //    if ( radio) {
-    datasAxios.forEach(pokemon => {
-        console.log("pokemon,", pokemon);
-        option = document.createElement('option');
-        option.innerText = pokemon.name;
-        pokemonList.appendChild(option);
+
+document.querySelectorAll("input[type='radio']").forEach(radio => {
+    radio.addEventListener("change", (eventChange) => {
+        if (eventChange.target.value == "par-nom") {
+            console.log("target : ", eventChange.target.value);
+            pokemonList.innerHTML = "";
+            let optionDefault = document.createElement("option");
+            optionDefault.innerText = "--Choix Pokemon--";//....choisir de rien afficher au depart et cest au client de choisir son pokemon.....
+            optionDefault.value = "0";
+            pokemonList.appendChild(optionDefault);
+            datasAxios.forEach(pokemon => {
+                console.log("pokemon,", pokemon);
+                let option = document.createElement('option');
+                option.innerText = pokemon.name;
+                option.value = pokemon.name;
+                pokemonList.appendChild(option);
+
+            });
+        
+        } else {
+        
+            pokemonList.innerHTML = "";
+            let optionDefault = document.createElement("option");
+            optionDefault.innerText = "--Choix type--";//....choisir de rien afficher au depart et cest au client de choisir son pokemon.....
+            optionDefault.value = "0";
+            pokemonList.appendChild(optionDefault);
+            pokemonType.forEach(type => {
+            console.log("pokemontype,", type);
+            let option2 = document.createElement('option');
+            option2.innerText = type.name;
+            option2.value = type.name;
+            pokemonList.appendChild(option2);
     });
+        }
+
+  })
+})
+   
+    document.querySelector("select").addEventListener("change", () => {
+        document.querySelector("table").innerHTML = "";
+        let PokemonName = document.querySelector("select").value;
+        if (document.querySelector("select").value == "0") {
+        document.querySelector(".contenair img").removeAttribute("src");
+        } else {
+                
+               // Trouver le Pokémon sélectionné
+        let selectePokemon = datasAxios.find((element) => element.name === PokemonName);
+        image.setAttribute("src", selectePokemon.image);
+              
+                 // Afficher les statistiques
+       
+        for (let [propriete, valeur] of Object.entries(selectePokemon.stats)) {
+        console.log(`${propriete}: ${valeur}`);
+        let uneLigne = document.createElement("tr");
+        lesStats.appendChild(uneLigne);
+        let uneStat = document.createElement("td");
+        uneStat.classList.add("une-statistique");
+        uneStat.textContent = propriete + " : " + valeur;
+        uneLigne.appendChild(uneStat);
+         }
+        }
+    });
+       
+           
 
 
     

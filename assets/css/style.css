@@ -7,23 +7,21 @@ body{
     background-image: url(/assets/img/unnamed.jpg);
     background-size: auto;
     display: flex;
-    flex-direction: column;
     align-items: center;
     
  
 }
 main {
     width: 70%; 
-    height: 300%;
-    padding: 300PX;
-    padding-bottom: 300px;
+    height: 30%;
+    padding: 100PX;
+    padding-bottom: 100px;
     border: 1px solid rgb(239, 243, 198);
     background-color: rgba(215, 142, 223, 0.484);
     margin: auto;
     border-radius:5% ;
     display: flex;
     flex-direction: column;
-    justify-content: ;
 
 }
 #fieldset {
@@ -57,7 +55,7 @@ main {
 }
 #pokemon-img{
     border: 1px solid #f8dada;
-    width: 350px;
+     width: 350px; 
     height: 350px;
     background-color: rgb(216, 225, 233);
     border-radius: 50%;
@@ -71,18 +69,15 @@ h1 {
 }
 .une-statistique {
     border: 1px solid #f8dada;
-    width: 50px;
+    width: 60px;
     height: 50px;
     background-color: rgb(216, 225, 233);
     box-shadow: rgb(77, 38, 77) 0px 20px 30px 10px;
     
 }
-.contenair{
-    width: 60%;
+.contenair {
     padding: 20px;
-    background-color: rgba(216, 225, 233, 0);
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
