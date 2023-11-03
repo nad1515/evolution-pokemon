@@ -107,6 +107,40 @@ document.querySelectorAll("input[type='radio']").forEach(radio => {
                 pokemonList.appendChild(option);
 
             });
+            document.querySelector("select").addEventListener("change", () => {
+                document.querySelector("table").innerHTML = "";
+                let PokemonName = document.querySelector("select").value;
+                if (document.querySelector("select").value == "0") {
+                document.querySelector(".contenair img").removeAttribute("src");
+                } else {
+                        
+                       // Trouver le Pokémon sélectionné
+                let selectePokemon = datasAxios.find((element) => element.name === PokemonName);
+                image.setAttribute("src", selectePokemon.image);
+                // for (let index = 0; index < selectePokemon.apiTypes.length; index++) {
+                //     let cadreElement = document.createElement("div");
+                //     cadreElement.classList.add("cadre-element");
+                //     contenair.appendChild(cadreElement);
+                //     cadreElement.textContent = selectePokemon.apiTypes[index].name;
+                // }   a terminer a la maison on essayant objt entries?????????????????????????????????????????????????????????
+                   
+           
+        
+                      
+                        
+               
+                for (let [propriete, valeur] of Object.entries(selectePokemon.stats)) {
+                console.log(`${propriete}: ${valeur}`);
+                let uneLigne = document.createElement("tr");
+                lesStats.appendChild(uneLigne);
+                let uneStat = document.createElement("td");
+                uneStat.classList.add("une-statistique");
+                uneStat.textContent = propriete + " : " + valeur;
+                uneLigne.appendChild(uneStat);
+                 }
+                
+                }
+            });
         
         } else {
         
@@ -122,38 +156,46 @@ document.querySelectorAll("input[type='radio']").forEach(radio => {
             option2.value = type.name;
             pokemonList.appendChild(option2);
     });
+         
         }
-
+        // let selectePokemonType = datasAxios.find((element) => element.name === Pokemon.name);
+        // image.setAttribute("src", selectePokemonType.image); 
   })
 })
    
-    document.querySelector("select").addEventListener("change", () => {
-        document.querySelector("table").innerHTML = "";
-        let PokemonName = document.querySelector("select").value;
-        if (document.querySelector("select").value == "0") {
-        document.querySelector(".contenair img").removeAttribute("src");
-        } else {
+    // document.querySelector("select").addEventListener("change", () => {
+    //     document.querySelector("table").innerHTML = "";
+    //     let PokemonName = document.querySelector("select").value;
+    //     if (document.querySelector("select").value == "0") {
+    //     document.querySelector(".contenair img").removeAttribute("src");
+    //     } else {
                 
-               // Trouver le Pokémon sélectionné
-        let selectePokemon = datasAxios.find((element) => element.name === PokemonName);
-        image.setAttribute("src", selectePokemon.image);
+    //            // Trouver le Pokémon sélectionné
+    //     let selectePokemon = datasAxios.find((element) => element.name === PokemonName);
+    //     image.setAttribute("src", selectePokemon.image);
               
-                 // Afficher les statistiques
+    //              // Afficher les statistiques
        
-        for (let [propriete, valeur] of Object.entries(selectePokemon.stats)) {
-        console.log(`${propriete}: ${valeur}`);
-        let uneLigne = document.createElement("tr");
-        lesStats.appendChild(uneLigne);
-        let uneStat = document.createElement("td");
-        uneStat.classList.add("une-statistique");
-        uneStat.textContent = propriete + " : " + valeur;
-        uneLigne.appendChild(uneStat);
-         }
-        }
-    });
-       
+    //     for (let [propriete, valeur] of Object.entries(selectePokemon.stats)) {
+    //     console.log(`${propriete}: ${valeur}`);
+    //     let uneLigne = document.createElement("tr");
+    //     lesStats.appendChild(uneLigne);
+    //     let uneStat = document.createElement("td");
+    //     uneStat.classList.add("une-statistique");
+    //     uneStat.textContent = propriete + " : " + valeur;
+    //     uneLigne.appendChild(uneStat);
+    //      }
+    //     }
+    // });
+        // Afficher les statistiques
+        // for (let index = 0; index < pokemonList.apiTypes.length; index++) {
+        //     let cadreElement = document.createElement("div");
+        //     cadreElement.classList.add("cadre-element");
+        //     contenair.appendChild(cadreElement);
+        //     cadreElement.textContent = pokemonList.apiTypes[index].name;
+        // }
            
-
+   
 
     
    
