@@ -115,7 +115,7 @@ document.querySelectorAll("input[type='radio']").forEach(radio => {
                 } else {
                         
                        // Trouver le Pokémon sélectionné
-                let selectePokemon = datasAxios.find((element) => element.name === PokemonName);
+                
                 image.setAttribute("src", selectePokemon.image);
                 // for (let index = 0; index < selectePokemon.apiTypes.length; index++) {
                 //     let cadreElement = document.createElement("div");
@@ -143,6 +143,22 @@ document.querySelectorAll("input[type='radio']").forEach(radio => {
             });
         
         } else {
+            document.querySelector("select").addEventListener("change", () => {
+                document.querySelector("table").innerHTML = ""; // Efface les statistiques actuelles
+                let selectedType = document.querySelector("select").value;
+            
+                if (selectedType === "0") {
+                    document.querySelector(".contenair img").removeAttribute("src"); // Efface l'image
+                } else {
+                    // Filtrer les Pokémon par type
+                    let filteredPokemons = datasAxios.filter(pokemon => pokemon.type === selectedType);
+            
+                    // Mettre à jour la liste déroulante des Pokémon en fonction du type sélectionné
+                    updatePokemonList(filteredPokemons);
+                }
+            });
+            
+           
         
             pokemonList.innerHTML = "";
             let optionDefault = document.createElement("option");
@@ -155,47 +171,10 @@ document.querySelectorAll("input[type='radio']").forEach(radio => {
             option2.innerText = type.name;
             option2.value = type.name;
             pokemonList.appendChild(option2);
-    });
+    })
          
         }
-        // let selectePokemonType = datasAxios.find((element) => element.name === Pokemon.name);
-        // image.setAttribute("src", selectePokemonType.image); 
+       
   })
 })
-   
-    // document.querySelector("select").addEventListener("change", () => {
-    //     document.querySelector("table").innerHTML = "";
-    //     let PokemonName = document.querySelector("select").value;
-    //     if (document.querySelector("select").value == "0") {
-    //     document.querySelector(".contenair img").removeAttribute("src");
-    //     } else {
-                
-    //            // Trouver le Pokémon sélectionné
-    //     let selectePokemon = datasAxios.find((element) => element.name === PokemonName);
-    //     image.setAttribute("src", selectePokemon.image);
-              
-    //              // Afficher les statistiques
-       
-    //     for (let [propriete, valeur] of Object.entries(selectePokemon.stats)) {
-    //     console.log(`${propriete}: ${valeur}`);
-    //     let uneLigne = document.createElement("tr");
-    //     lesStats.appendChild(uneLigne);
-    //     let uneStat = document.createElement("td");
-    //     uneStat.classList.add("une-statistique");
-    //     uneStat.textContent = propriete + " : " + valeur;
-    //     uneLigne.appendChild(uneStat);
-    //      }
-    //     }
-    // });
-        // Afficher les statistiques
-        // for (let index = 0; index < pokemonList.apiTypes.length; index++) {
-        //     let cadreElement = document.createElement("div");
-        //     cadreElement.classList.add("cadre-element");
-        //     contenair.appendChild(cadreElement);
-        //     cadreElement.textContent = pokemonList.apiTypes[index].name;
-        // }
-           
-   
-
-    
    
